@@ -29,9 +29,13 @@ __Avempace__ is POJO-based Java framework that extends and hides the complexity 
 
 
 #Usage and Sample Program
-####PLEASE HARD-CODE VALID AWS CREDENTIALS IN 
-####com.polymathiccoder.avempace.config.AvempaceModule.java
-####BEFORE COMPILING.
+->__PLEASE HARD-CODE VALID AWS CREDENTIALS__<-
+
+->__IN THE FILE__<-
+
+->__com.polymathiccoder.avempace.config.AvempaceModule.java__<-
+
+->__BEFORE COMPILING__<-
 
 
 __Considered the following annotated POJO:__
