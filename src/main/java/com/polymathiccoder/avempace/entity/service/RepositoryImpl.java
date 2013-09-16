@@ -164,7 +164,7 @@ public class RepositoryImpl<T> implements Repository<T> {
 		final Region primaryRegion = distribbutionDefinition.getPrimaryRegion();
 		save(pojo, primaryRegion);
 
-		if (distribbutionDefinition.isPropagatedAcrossAllRegions()) {
+		if (distribbutionDefinition.isPropagatedAcrossAllRegions() && ! distribbutionDefinition.getSecondaryRegions().isEmpty()) {
 			final ExecutorService executor = Executors.newFixedThreadPool(distribbutionDefinition.getSecondaryRegions().size());
 			for (final Region secondaryRegion : distribbutionDefinition.getSecondaryRegions()) {
 				executor.execute(
@@ -199,7 +199,7 @@ public class RepositoryImpl<T> implements Repository<T> {
 		final Region primaryRegion = distribbutionDefinition.getPrimaryRegion();
 		update(entityPropertyValueCriteria, entityPropertyValueOperations, primaryRegion);
 
-		if (distribbutionDefinition.isPropagatedAcrossAllRegions()) {
+		if (distribbutionDefinition.isPropagatedAcrossAllRegions() && ! distribbutionDefinition.getSecondaryRegions().isEmpty()) {
 			final ExecutorService executor = Executors.newFixedThreadPool(distribbutionDefinition.getSecondaryRegions().size());
 			for (final Region secondaryRegion : distribbutionDefinition.getSecondaryRegions()) {
 				executor.execute(
@@ -256,7 +256,7 @@ public class RepositoryImpl<T> implements Repository<T> {
 		final Region primaryRegion = distribbutionDefinition.getPrimaryRegion();
 		remove(pojo, primaryRegion);
 
-		if (distribbutionDefinition.isPropagatedAcrossAllRegions()) {
+		if (distribbutionDefinition.isPropagatedAcrossAllRegions() && ! distribbutionDefinition.getSecondaryRegions().isEmpty()) {
 			final ExecutorService executor = Executors.newFixedThreadPool(distribbutionDefinition.getSecondaryRegions().size());
 			for (final Region secondaryRegion : distribbutionDefinition.getSecondaryRegions()) {
 				executor.execute(
@@ -293,7 +293,7 @@ public class RepositoryImpl<T> implements Repository<T> {
 		final Region primaryRegion = distribbutionDefinition.getPrimaryRegion();
 		removeAll(primaryRegion);
 
-		if (distribbutionDefinition.isPropagatedAcrossAllRegions()) {
+		if (distribbutionDefinition.isPropagatedAcrossAllRegions() && ! distribbutionDefinition.getSecondaryRegions().isEmpty()) {
 			final ExecutorService executor = Executors.newFixedThreadPool(distribbutionDefinition.getSecondaryRegions().size());
 			for (final Region secondaryRegion : distribbutionDefinition.getSecondaryRegions()) {
 				executor.execute(
