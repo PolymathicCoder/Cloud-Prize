@@ -37,15 +37,15 @@ public class PersistenceModule {
 			final String accessKey = nimbleConfiguration.getAccessKey();
 			final String secretKey = nimbleConfiguration.getSecretKey();
 
-			final AmazonDynamoDB amazonDynamoDB;
-			if (accessKey.isEmpty() || secretKey.isEmpty()) {
-				amazonDynamoDB = new AlternatorDBClientV2();
-		        amazonDynamoDB.setEndpoint("http://localhost:9090");
-			} else {
+			AmazonDynamoDB amazonDynamoDB;
+			//if (accessKey.isEmpty() || secretKey.isEmpty()) {
+				//amazonDynamoDB = new AlternatorDBClientV2();
+		        //amazonDynamoDB.setEndpoint("http://localhost:9090");
+			//} else {
 				final BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		        amazonDynamoDB = new AmazonDynamoDBClient(credentials);
 		        amazonDynamoDB.setEndpoint(region.getEndpoint());
-			}
+			//}
 
 	        amazonDynamoDBsIndexedByRegion.put(region, amazonDynamoDB);
 		}
@@ -59,14 +59,14 @@ public class PersistenceModule {
 			final String accessKey = nimbleConfiguration.getAccessKey();
 			final String secretKey = nimbleConfiguration.getSecretKey();
 
-			final AmazonDynamoDBAsync amazonDynamoDBAsync;
-			if (accessKey.isEmpty() || secretKey.isEmpty()) {
+			AmazonDynamoDBAsync amazonDynamoDBAsync;
+			//if (accessKey.isEmpty() || secretKey.isEmpty()) {
 				//FIXME
-				amazonDynamoDBAsync = new AmazonDynamoDBAsyncClient(new BasicAWSCredentials("AKIAIQOONXLTVCMQWXZA", "Gi9Ip0hUHiRvfh06rLvS3lsKj28q1PGaqzhJOB2E"));
-			} else {
+				//amazonDynamoDBAsync = new AmazonDynamoDBAsyncClient(new BasicAWSCredentials("AKIAIQOONXLTVCMQWXZA", "Gi9Ip0hUHiRvfh06rLvS3lsKj28q1PGaqzhJOB2E"));
+			//} else {
 				final BasicAWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 				amazonDynamoDBAsync = new AmazonDynamoDBAsyncClient(credentials);
-			}
+			//}
 
 	        amazonDynamoDBAsync.setEndpoint(region.getEndpoint());
 	        amazonDynamoDBAsyncsIndexedByRegion.put(region, amazonDynamoDBAsync);
