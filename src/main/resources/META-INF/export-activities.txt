@@ -1,0 +1,24 @@
+cd /home/hadoop
+mkdir udfs
+export HIVE_AUX_JARS_PATH=/home/hadoop/udfs
+
+wget https://s3.amazonaws.com/justme-emr/scripts/transformReaction-0.0.1-SNAPSHOT.jar
+wget https://s3.amazonaws.com/justme-emr/scripts/transformMessage-0.0.1-SNAPSHOT.jar
+wget https://s3.amazonaws.com/justme-emr/scripts/transformConversation-0.0.1-SNAPSHOT.jar
+wget https://s3.amazonaws.com/justme-emr/scripts/transformAttachedMedia-0.0.1-SNAPSHOT.jar
+
+CREATE TEMPORARY FUNCTION transformConversation AS 'me.just.transformer.TransformConversation';
+CREATE TEMPORARY FUNCTION transformMessage AS 'me.just.transformer.TransformMessage';
+CREATE TEMPORARY FUNCTION transformAttachedMedia AS 'me.just.transformer.TransformAttachedMedia';
+CREATE TEMPORARY FUNCTION transformReaction AS 'me.just.transformer.TransformReaction';
+
+CREATE EXTERNAL TABLE dynamodb_tbl_activities_by_owner (hive_key string, hive_range string, hive_activity_id string, hive_activity_type string, hive_you_cname string, hive_someone_cname string, hive_conversation string, hive_message string, hive_media string, hive_comment string, hive_like string, hive_owning_user_cname string, hive_timestamp string)
+STORED BY 'org.apache.hadoop.hive.dynamodb.DynamoDBStorageHandler'
+TBLPROPERTIES ("dynamodb.table.name" = "tbl_activities_by_owner",
+"dynamodb.column.mapping" = "hive_key:key,hive_range:range,hive_activity_id:activity_id,hive_activity_type:activity_type,hive_you_cname:you_cname,hive_someone_cname:someone_cname,hive_conversation:conversation,hive_message:message,hive_media:media,hive_comment:comment,hive_like:like,hive_owning_user_cname:owning_user_cname,hive_timestamp:timestamp");
+
+CREATE EXTERNAL TABLE s3_tbl_activities_by_owner (hive_key string, hive_range string, hive_activity_id string, hive_activity_type string, hive_you_cname string, hive_someone_cname string, hive_conversation string, hive_message string, hive_media string, hive_comment string, hive_like string, hive_owning_user_cname string, hive_timestamp string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\;'
+LOCATION 's3://justme-emr/tbl_activities_by_owner/';
+
+INSERT OVERWRITE TABLE s3_tbl_activities_by_owner SELECT hive_key, hive_range, hive_activity_id, hive_activity_type, hive_you_cname, hive_someone_cname, transformConversation(hive_conversation), transformMessage(hive_message), transformAttachedMedia(hive_media), transformReaction(hive_comment), transformReaction(hive_like), hive_owning_user_cname, hive_timestamp FROM dynamodb_tbl_activities_by_owner;
