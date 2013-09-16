@@ -50,9 +50,16 @@ public class RepositoryImplTest {
 		final Employee employee = new Employee(1l, "Abdelmonaim", 28, "PolymathicCoder Inc.", "USA", Lists.newArrayList(23, 43, 12, 5), Lists.newArrayList("ORANGE", "BLUE"));
 
 		REPOSITORY.save(employee);
+
+		// Operation
 		REPOSITORY.remove(employee);
 
-		List<Employee> employees = REPOSITORY.findAll();
+		List<Employee> employees = REPOSITORY.findAllBy(
+				matching(
+						$("company").is(equalTo("PolymathicCoder Inc.")))
+					.and(
+						$("id").is(equalTo(0)))
+		);
 
 		assertThat(employees.size(), org.hamcrest.Matchers.equalTo(0));
 	}
@@ -123,7 +130,7 @@ public class RepositoryImplTest {
 		// Operation
 		List<Employee> actualQueryByRangeEmployees = REPOSITORY.findAllBy(
 				matching(
-						$("location").is(equalTo("PolymathicCoder Inc.")))
+						$("company").is(equalTo("PolymathicCoder Inc.")))
 					.and(
 						$("id").is(greaterThanOrEqualTo(3)))
 		);
@@ -191,10 +198,5 @@ public class RepositoryImplTest {
 	@AfterClass
 	public static void teardown() throws Exception {
 		//MOCKED_DYNAMODB.stop();
-	}
-
-	@AfterClass
-	public static void y() throws Exception {
-		MOCKED_DYNAMODB.stop();
 	}
 }
