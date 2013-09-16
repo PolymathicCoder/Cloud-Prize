@@ -304,6 +304,7 @@ public class RepositoryImpl<T> implements Repository<T> {
 							}
 						});
 			}
+			while(executor.isTerminated()) {}
 			executor.shutdown();
 		}
 	}
