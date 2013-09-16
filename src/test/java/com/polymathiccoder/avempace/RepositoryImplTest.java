@@ -12,7 +12,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,8 +29,8 @@ public class RepositoryImplTest {
 
 	@BeforeClass
 	public static void setup() throws Exception {
-		MOCKED_DYNAMODB = new AlternatorDB();
-		MOCKED_DYNAMODB.start();
+		//MOCKED_DYNAMODB = new AlternatorDB();
+		//MOCKED_DYNAMODB.start();
 		REPOSITORY = Avempace.getRepositoryFactory().createRepository(Employee.class);
 	}
 
@@ -67,7 +66,7 @@ public class RepositoryImplTest {
 				matching(
 						$("company").is(equalTo("PolymathicCoder Inc.")))
 					.and(
-						$("id").is(equalTo(3l)))
+						$("id").is(equalTo(1l)))
 		);
 
 		assertThat(actual.getId(), org.hamcrest.Matchers.equalTo(employee.getId()));
@@ -96,7 +95,7 @@ public class RepositoryImplTest {
 				matching(
 						$("company").is(equalTo("PolymathicCoder Inc.")))
 					.and(
-						$("id").is(equalTo(3l))
+						$("id").is(equalTo(1l))
 		));
 		final Employee expected = new Employee(1l, "Abdel", 28, "PolymathicCoder Inc.", "United States of America", Lists.newArrayList(23, 43, 12, 5), Lists.newArrayList("ORANGE", "BLUE"));
 
@@ -189,8 +188,9 @@ public class RepositoryImplTest {
 		assertThat(actualScanByIndexResult.size(), org.hamcrest.Matchers.equalTo(1));
 	}
 
-	@After
-	public void teardown() {
+	@AfterClass
+	public static void teardown() throws Exception {
+		//MOCKED_DYNAMODB.stop();
 	}
 
 	@AfterClass
