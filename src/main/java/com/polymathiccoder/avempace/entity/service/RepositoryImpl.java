@@ -313,7 +313,11 @@ public class RepositoryImpl<T> implements Repository<T> {
 		final Table table = Table.Builder.create(tableDefinition, region).build();
 
 		final DeleteTable deleteTable = DeleteTable.Builder.create(table).build();
-		dynamoDBDDLOperationsService.deleteTable(deleteTable);
+		//FIXME
+		try {
+			dynamoDBDDLOperationsService.deleteTable(deleteTable);
+		} catch (final Exception exception) {
+		}
 
 		final CreateTable createTable = CreateTable.Builder.create(table).build();
 		dynamoDBDDLOperationsService.createTable(createTable);
