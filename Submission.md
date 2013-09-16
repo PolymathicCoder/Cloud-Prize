@@ -2,7 +2,8 @@ Edit this page to describe your Submission.
 
 ## Which Categories Best Fit Your Submission and Why?
 
-Best datastore integration
+__Best datastore integration__
+
 Avempace is POJO-based Java framework that extends and hides the complexity the AWS DynamoDB API. The motivation behind it is to enable and trivilize advanced cloud features like cross-region support, distributed transaction supporting, batching, etc…
 
 ## Describe your Submission
