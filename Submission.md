@@ -8,7 +8,7 @@ Avempace is POJO-based Java framework that extends and hides the complexity the 
 
 ## Describe your Submission
 
-## Features
+### Features
 
 * __Annotation-Driven Mapping:__ Easily define mapping between PJOs and DynamoDB tables through a set of annotations.
 * __Automatic schema generation__
